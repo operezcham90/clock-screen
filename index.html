@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>⏳ Reloj</title>
+    <style>
+        * {
+            background-color: black;
+            text-align: center;
+        }
+
+        body {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        time {
+            color: white;
+            font-family: monospace;
+            font-size: xx-large;
+            display: inline-block;
+            margin: 1em;
+        }
+
+        zone,
+        date {
+            color: cadetblue;
+            font-family: monospace;
+            font-size: medium;
+            display: block;
+        }
+
+        time.main {
+            padding-top: 0.5em;
+            font-size: 15em;
+            display: block;
+            margin: 0;
+        }
+
+        zone.main,
+        date {
+            font-size: xx-large;
+        }
+    </style>
+    <script>
+        const zones = [
+            'America/Mexico_City',
+            'America/Tijuana',
+            'America/Cancun',
+            'America/Puerto_Rico',
+            'Europe/Berlin',
+            'Asia/Shanghai'
+        ]
+        const print = (zone, idx) => {
+            const now = new Date()
+            const loc = 'en-US'
+            const time = document.createElement('time')
+            const name = document.createElement('zone')
+            time.innerText = now.toLocaleTimeString(loc, {
+                timeZone: zone,
+                hour12: false
+            })
+            name.innerText = zone
+            if (idx === 0) {
+                const date = document.createElement('date')
+                time.classList.add('main')
+                name.classList.add('main')
+                date.innerText = now.toLocaleDateString(loc, {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })
+                time.append(date)
+            }
+            time.append(name)
+            document.body.append(time)
+        }
+        const update = () => {
+            document.body.innerHTML = ''
+            zones.forEach(print)
+        }
+        setInterval(update, 30)
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
